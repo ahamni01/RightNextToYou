@@ -1,0 +1,22 @@
+WEBRTC:
+
+Web real time communiation: browser and devises with skds 
+camera - video
+microphone - audio
+data delivery
+screen sharing, recording 
+
+STUN: Session, Traversal, Utilities, Network: IPs
+Signalling and Offering 
+
+Must have:
+E2EE - End to End Encryption - Authentiticity and confidentiality of transmission 
+codec - encoding and decoding
+
+Session Management: Signalling. RTCDataChennelAPI
+
+The WebRTC API
+It consists of a few main javascript objects −
+RTCPeerConnection
+MediaStream
+RTCDataChannel
