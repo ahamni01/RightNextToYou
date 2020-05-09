@@ -10,7 +10,7 @@ export class Server {
 
     private activeSockets: string[] = [];
 
-    private readonly DEFAULT_PORT = 5000;
+    private readonly DEFAULT_PORT = 8080;
 
     constructor() {
         this.initialize();
@@ -37,14 +37,15 @@ export class Server {
     }
 
     private handleSocketConnection(): void {
+        console.log("Handling socket connection");
         this.io.on("connection", socket => {
             const existingSocket = this.activeSockets.find(
                 existingSocket => existingSocket === socket.id
             );
-
+            console.log(`Socket connected. ${this.activeSockets}`);
+            //console.log(activeSockets);
             if (!existingSocket) {
                 this.activeSockets.push(socket.id);
-
                 socket.emit("update-user-list", {
                     users: this.activeSockets.filter(
                         existingSocket => existingSocket !== socket.id
@@ -61,6 +62,7 @@ export class Server {
                     offer: data.offer,
                     socket: socket.id
                 });
+                console.log("Call made...");
             });
 
             socket.on("make-answer", data => {
@@ -68,12 +70,14 @@ export class Server {
                     socket: socket.id,
                     answer: data.answer
                 });
+                console.log("Answer made...");
             });
 
             socket.on("reject-call", data => {
                 socket.to(data.from).emit("call-rejected", {
                     socket: socket.id
                 });
+                console.log("Call rejected...");
             });
 
             socket.on("disconnect", () => {
@@ -83,6 +87,7 @@ export class Server {
                 socket.broadcast.emit("remove-user", {
                     socketId: socket.id
                 });
+                console.log("Disconnect and remove user...");
             });
         });
     }
